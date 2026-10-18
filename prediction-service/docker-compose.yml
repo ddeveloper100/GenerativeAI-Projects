@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # LLM Explanation Service - Port 8001
+  llm-explanation-service:
+    build:
+      context: .
+      dockerfile: llm_explanation_layer/Dockerfile
+    container_name: llm-explanation-service
+    ports:
+      - "8001:8001"
+    environment:
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama2:latest}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - prediction-network
+
+  # ML Prediction Service - Port 8002
+  ml-prediction-service:
+    build:
+      context: .
+      dockerfile: ml_prediction_service/Dockerfile
+    container_name: ml-prediction-service
+    ports:
+      - "8002:8002"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - prediction-network
+
+networks:
+  prediction-network:
+    driver: bridge
+
