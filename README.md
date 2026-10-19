@@ -13,6 +13,13 @@ Analyzes the data represented in a dashboard to generate meaningful insights, hi
 ### 3. Predictive Analytics Model
 Uses historical data from the dashboard to generate predictions about potential future trends. It also includes an interactive chat interface where users can ask questions about specific aspects of the dashboard and receive data-driven predictive insights.
 
+## Tech Stack
+
+- **Python** — Backend development and AI-powered data processing.
+- **FastAPI** — Building API endpoints to connect the dashboard with the AI functionalities.
+- **FAISS** — Efficient similarity search and retrieval of relevant database schema information.
+- **Ollama** — Running and interacting with large language models (LLMs) for SQL generation and AI-powered insights.
+
 ## Objective
 
 The objective of this project is to combine business intelligence with AI-driven analysis to make data exploration more accessible, automate insight generation, and support data-informed decision-making.
